@@ -15,5 +15,6 @@ router.param('quizId', quizController.load); // Autoload :quizId
 router.get('/quizes',                       quizController.index);
 router.get('/quizes/:quizId(\\d+)',         quizController.show);
 router.get('/quizes/:quizId(\\d+)/answer',  quizController.answer);
+router.get('/author', {title: 'Creditos'});
 
 module.exports = router;
