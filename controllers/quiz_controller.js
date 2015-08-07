@@ -63,7 +63,7 @@ exports.create = function(req, res) {
       } else {
         quiz // save: guarda en DB campos pregunta y respuesta de quiz
         .save({fields: ["pregunta", "respuesta"]})
-        .then(function(){ res.redirect('/quizes')})
+        .then( function(){ res.redirect('/quizes')})
     }     // res.redirect: Redirección HTTP a lista de preguntas
   });
 };
