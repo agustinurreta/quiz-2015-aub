@@ -23,13 +23,17 @@ app.use(partials());
 app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-//app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({ extended: false }));
+//app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
+app.use('/author', routes);
+app.use('/quizes', routes);
+app.use('/quizes/:quizId', routes);
+app.use('/quizes/:quizId/answer', routes);
 //app.use('/users', users);
 
 // catch 404 and forward to error handler

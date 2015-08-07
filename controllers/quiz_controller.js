@@ -1,3 +1,5 @@
+var express = require('express');
+var router = express.Router();
 var models = require('../models/models.js');
 
 // Autoload - factoriza el código si ruta incluye :quizId
@@ -14,7 +16,8 @@ exports.load = function(req, res, next, quizId) {
 
 // GET /quizes
 exports.index = function(req, res){
-  models.Quiz.findAll().then(
+  var search = '%'+(req.query.search||"").replace(/ /,'%')+'%';
+  models.Quiz.findAll({where: ["pregunta like ?", search]}).then(
     function(quizes) {
       res.render('quizes/index.ejs', {quizes: quizes, errors: []});
     }
@@ -89,7 +92,7 @@ exports.update = function(req, res) {
       } else {
         req.quiz     // save: guarda campos pregunta y respuesta en DB
         .save( {fields: ["pregunta", "respuesta"]})
-        .then( function(){ res.redirect('/quizes');});
+        .then( function(){ res.redirect('/quizes');})
       }     // Redirección HTTP a lista de preguntas (URL relativo)
     }
   ).catch(function(error){next(error)});
