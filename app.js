@@ -44,6 +44,24 @@ app.use(function(req, res, next){
   next();
 });
 
+// auto-logout tras 2 minutos
+
+  app.use(function(req, res, next) {
+    var now = new Date();
+    if (req.session.lastAccess){
+      if ( now.getTime() - req.session.lastAccess > 1000*60*2){ //2 minutos
+        //paso el tiempo
+        delete req.session.user;
+      }
+    }
+    //se establece el ultimo acceso
+    req.session.lastAccess = now.getTime();
+    next();
+  });
+
+
+
+
 app.use('/', routes);
 app.use('/author', routes);
 app.use('/quizes', routes);
